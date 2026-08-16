@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabbed Menu Example</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/scripts.js"></script>
+    <script src="js/scripts.js" defer></script>
     
     <!-- CSS STYLING
     <style>
@@ -68,7 +68,7 @@
 </head>
 <body>
 
-    <h1>Company Information</h1>
+    <h1>Everything You Need to Know about Photomask Is Here!</h1>
 
     <!-- Tab Buttons Menu -->
     <div class="tabs">
@@ -87,10 +87,11 @@ for more stories!</p>
 
     <div id="writings" class="tab-content">
         <h2>Ruoping's writings</h2>
-        <label for="options">Choose an item from the list:</label>
+        <label for="options">Choose Language</label>
             <br>
             <select id="file-dropdown" name="options" onchange="if (this.value) window.location.href=this.value;">
-                <option value="">Select a file...</option>
+                <option value="">English Essays</option>
+                <option value="">Chinese Essays</option>
                 <option value="files/SandstoneLease.pdf">Sandstone</option>
                 <option value="files/Rain-Dial-Owners-Manual.pdf">Rain-Dial</option>
                 <option value="item3">Whatever</option>
