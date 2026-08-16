@@ -1,212 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabbed Menu Example</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/scripts.js" defer></script>
-    
-    <!-- CSS STYLING
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f9;
-        }
-
-        select {
-            padding: 8px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        /* Container for the tabs */
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid #ccc;
-            margin-bottom: 20px;
-        }
-
-        /* Styling for individual tab buttons */
-        .tab-button {
-            background-color: #eee;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            font-size: 1em;
-        }
-
-        /* Hover effect */
-        .tab-button:hover {
-            background-color: #ddd;
-        }
-
-        /* Active tab styling */
-        .tab-button.active {
-            background-color: #3498db;
-            color: white;
-            border-bottom: 2px solid #3498db;
-        }
-
-        .content { display: none; font-size: 16px; line-height: 1.5; max-width: 600px; }
-        .active { display: block; }
-
-        /* Content Area */
-        .tab-content {
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: white;
-            display: none; /* By default, all content sections are hidden */
-        }
-
-        /* Class used by JavaScript to show content */
-        .tab-content.active {
-            display: block; 
-        }
-    </style>  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Under Construction</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+      color: #333;
+      text-align: center;
+    }
+    .container {
+      padding: 2rem;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1 { margin-bottom: 0.5rem; }
+    p { color: #666; }
+  </style>
 </head>
 <body>
-
-    <h1>Everything You Need to Know about Photomask Is Here!</h1>
-
-    <!-- Tab Buttons Menu -->
-    <div class="tabs">
-        <button class="tab-button active" onclick="openTab(event, 'news')">News</button>
-        <button class="tab-button" onclick="openTab(event, 'writings')">Writings</button>
-        <button class="tab-button" onclick="openTab(event, 'about')">About Us</button>
-        <button class="tab-button" onclick="openTab(event, 'contact')">Contact Us</button>
-    </div>
-
-    <!-- Tab Content Containers -->
-    <div id="news" class="tab-content active">
-        <h2>📰 Latest Updates</h2>
-        <p>Welcome to our news section! Here you will find articles, announcements, and updates on our company's progress and achievements. Check back soon 
-for more stories!</p>
-    </div>
-
-    <div id="writings" class="tab-content">
-        <h2>Ruoping's writings</h2>
-        <label for="options">Choose Language</label>
-            <br>
-            <select id="file-dropdown" name="options" onchange="if (this.value) window.location.href=this.value;">
-                <option value="">English Essays</option>
-                <option value="">Chinese Essays</option>
-                <option value="files/TheSunNeverSet.pdf">The Sun Never Set</option>
-                <option value="files/ElimChan.pdf">Elim Chan</option>
-                <option value="item3">Whatever</option>
-            </select>
-    </div>
-    
-    <!-- The area where file content will be displayed -->
-    <div id="file-content">Content will appear here...</div>
-
-    <div id="item1" class="content"><p>This is the first long English paragraph. It gives you all the details about the first choice in the menu. You can write anything you want here to explain your topic clearly.</p></div>
-  
-    <div id="item2" class="content">在獲得相關監管批准的前提下，雙方計劃於2027年上半年面向公眾推出商業化自動駕駛共享出行服務。屆時當地乘客可體驗文遠知行最新一代、符合.</div>
-  
-    <div id="item3" class="content">This is the third long paragraph. It finishes the group with facts for the final choice. Hidden by default, it appears only when you select item three.</div>
-
-    <div id="about" class="tab-content">
-        <h2>🌟 About Our Company</h2>
-        <p>We are committed to excellence and innovation. Our goal is to provide the best products and services to our community. Learn more about our 
-mission and vision.</p>
-    </div>
-
-    <div id="contact" class="tab-content">
-        <h2 style="color: #e74c3c;">📞 Get In Touch</h2>
-        <p>Have questions or need support? We're here to help! Please contact us using the following information:</p>
-        <p><strong>Email:</strong> <a href="mailto:ruoping001@yahoo.com">ruoping001@yahoo.com</a></p>
-        <p><strong>Phone:</strong> (123) 456-7890</p>
-        <p>We look forward to connecting with you!</p>
-    </div>
-
-    <!--
-    <script>
-        function showParagraph() {
-            var allParas = document.getElementsByClassName('content');
-            for (var i = 0; i < allParas.length; i++) {
-                allParas[i].classList.remove('active');
-            }
-            var selectedId = document.getElementById('options').value;
-            if (selectedId) {
-                document.getElementById(selectedId).classList.add('active');
-            }
-        }
-    </script>
-
-    <script>
-        const dropdown = document.getElementById('file-dropdown');
-        const contentDisplay = document.getElementById('file-content');
-
-        // Listen for when the user selects a different item in the dropdown
-        dropdown.addEventListener('change', function() {
-            const filePath = this.value;
-
-            // If the user selects the default empty option, clear the display
-            if (!filePath) {
-                contentDisplay.textContent = 'Content will appear here...';
-                return;
-            }
-
-            // Show a loading message while the file is being fetched
-            contentDisplay.textContent = 'Loading...';
-
-            // Fetch the file content
-            fetch(filePath)
-                .then(response => {
-                    // Check if the file was successfully found
-                    if (!response.ok) {
-                        throw new Error('Could not load the file. Check if it exists.');
-                    }
-                    return response.text();
-                })
-                .then(text => {
-                    // Display the text inside the div
-                    contentDisplay.textContent = text;
-                })
-                .catch(error => {
-                    // Display any errors (e.g., file not found)
-                    contentDisplay.textContent = 'Error: ' + error.message;
-                    contentDisplay.style.color = 'red';
-                });
-        });
-    </script>
-
-
-    <script>
-        // Function to handle the tab switching logic
-        function openTab(evt, tabName) {
-            
-            // 1. Get all elements with the class 'tab-content'
-            var contents = document.getElementsByClassName("tab-content");
-            
-            // 2. Hide all content elements by removing 'active' class
-            for (var i = 0; i < contents.length; i++) {
-                contents[i].classList.remove("active");
-            }
-
-            // 3. Get all buttons with the class 'tab-button'
-            var buttons = document.getElementsByClassName("tab-button");
-            
-            // 4. Remove 'active' class from all buttons
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove("active");
-            }
-
-            // 5. SHOW THE SELECTED CONTENT:
-            // Find the specific content element using its ID (e.g., 'news')
-            document.getElementById(tabName).classList.add("active");
-
-            // 6. MARK THE SELECTED BUTTON AS ACTIVE:
-            // Add 'active' class to the clicked button
-            evt.currentTarget.classList.add("active");
-        }
-
-        // OPTIONAL: Ensure that the correct tab is active on initial load (especially if the HTML structure changes)
-        // The HTML structure already handles this by adding the 'active' class to the first button and content.
-    </script>
-    -->
-
+  <div class="container">
+    <h1>🚧 Under Construction</h1>
+    <p>Our website is coming soon. Please check back later!</p>
+  </div>
 </body>
 </html>
