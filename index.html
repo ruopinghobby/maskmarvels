@@ -1,35 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Under Construction</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f4f4f9;
-      color: #333;
-      text-align: center;
-    }
-    .container {
-      padding: 2rem;
-      border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    h1 { margin-bottom: 0.5rem; }
-    p { color: #666; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabbed Menu Example</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/scripts.js" ></script>
+    
+</head>
+    <style>
+        h1 {
+           text-align: center;
+        }
+	h2 {
+           text-align: center;
+        }
+
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🚧 Under Construction</h1>
-    <p>Our website is coming soon. Please check back later!</p>
-  </div>
+
+    <h1>Everything You Need to Know about Photomask Is Here!</h1>
+
+    <!-- Tab Buttons Menu -->
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab(event, 'Motivation')">Motivation</button>
+        <button class="tab-button" onclick="openTab(event, 'Presentation')">Presentation</button>
+        <button class="tab-button" onclick="openTab(event, 'Reference')">Reference</button>
+        <button class="tab-button" onclick="openTab(event, 'Contact')">Contact Us</button>
+    </div>
+
+    <!-- Tab Content Containers -->
+    <div id="Motivation" class="tab-content active">
+        <div id="article-container"></div>
+    </div>
+
+
+    <script>
+       loadHTML('files/article.html', 'article-container');
+    </script>
+
+    <div id="Presentation" class="tab-content">
+        <h2>Ruoping's writings</h2>
+        <label for="options">Choose Language</label>
+            <br>
+            <select id="file-dropdown" name="options" >
+		<option value="">Select a file...</option>
+                <option value="files/Overview.pdf">Overview</option>
+                <option value="files/RET_in_depth.pdf">Reticle Enhancement Technology (in Depth)</option>
+            </select>
+	    <!-- REQUIRED: Display container where the PDF iframe will render -->
+            <div id="file-content" style="margin-top: 20px;">
+            <p>Select an option from the menu above to view content.</p>
+	    </div>
+    </div>
+
+    
+    <div id="Reference" class="tab-content">
+        <h2> Under Construction</h2>
+	<p> Coming Soon...</p>
+    </div>
+
+    <div id="Contact" class="tab-content">
+        <h2 style="color: #e74c3c;">📞 Get In Touch</h2>
+        <p>Have questions or need support? We're here to help! Please contact us using the following information:</p>
+        <p><strong>Email:</strong> <a href="mailto:ruopinghobby@gmail.com">ruopinghobby@gmail.com</a></p>
+        <p><strong>Phone:</strong> (123) 456-7890</p>
+        <p>We look forward to connecting with you!</p>
+    </div>
+
+
 </body>
 </html>
