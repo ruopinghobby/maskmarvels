@@ -1,77 +1,133 @@
+// ==========================================
+// 1. Reusable HTML Loader Function
+// ==========================================
+function loadHTML(filePath, containerId) {
+    fetch(filePath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(data => {
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.innerHTML = data;
+            } else {
+                console.error(`Container with ID "${containerId}" not found.`);
+            }
+        })
+        .catch(error => console.error('Error loading HTML:', error));
+}
+
+// ==========================================
+// 2. Tab Navigation Function
+// ==========================================
+function openTab(evt, tabName) {
+    // 1. Hide all tab contents
+    var contents = document.getElementsByClassName("tab-content");
+    for (var i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+    }
+
+    // 2. Remove "active" class from all tab buttons
+    var buttons = document.getElementsByClassName("tab-button");
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active");
+    }
+
+    // 3. Reset the dropdown and display area back to default state
+    const dropdown = document.getElementById('file-dropdown');
+    const contentDisplay = document.getElementById('file-content');
+    if (dropdown && contentDisplay) {
+        dropdown.value = ""; // Reset dropdown selection to "Select a file..."
+        contentDisplay.innerHTML = '<p>Select an option from the menu above to view content.</p>'; // Reset display container
+    }
+
+    // 4. Show current tab and set active button
+    var selectedTab = document.getElementById(tabName);
+    if (selectedTab) {
+        selectedTab.classList.add("active");
+    }
+
+    if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+    }
+}
+// ==========================================
+// 3. Hide/Show Paragraph Function
+// ==========================================
 function showParagraph() {
     var allParas = document.getElementsByClassName('content');
     for (var i = 0; i < allParas.length; i++) {
         allParas[i].classList.remove('active');
     }
-    var selectedId = document.getElementById('options').value;
+    var selectedId = document.getElementById('options') ? document.getElementById('options').value : null;
     if (selectedId) {
-        document.getElementById(selectedId).classList.add('active');
+        var selectedElement = document.getElementById(selectedId);
+        if (selectedElement) {
+            selectedElement.classList.add('active');
+        }
     }
 }
 
-const dropdown = document.getElementById('file-dropdown');
-const contentDisplay = document.getElementById('file-content');
-
-// Listen for when the user selects a different item in the dropdown
-dropdown.addEventListener('change', function() {
-    const filePath = this.value;
-
-    // If the user selects the default empty option, clear the display
-    if (!filePath) {
-        contentDisplay.textContent = 'Content will appear here...';
-        return;
+// ==========================================
+// 4. Dropdown Listener & Reset
+// ==========================================
+window.addEventListener('pageshow', function() {
+    var dropdown = document.getElementById('file-dropdown');
+    if (dropdown) {
+        dropdown.selectedIndex = 0;
     }
-
-    // Show a loading message while the file is being fetched
-    contentDisplay.textContent = 'Loading...';
-
-    // Fetch the file content
-    fetch(filePath)
-        .then(response => {
-            // Check if the file was successfully found
-            if (!response.ok) {
-                throw new Error('Could not load the file. Check if it exists.');
-            }
-            return response.text();
-        })
-        .then(text => {
-            // Display the text inside the div
-            contentDisplay.textContent = text;
-        })
-        .catch(error => {
-            // Display any errors (e.g., file not found)
-            contentDisplay.textContent = 'Error: ' + error.message;
-            contentDisplay.style.color = 'red';
-        });
 });
 
-// Function to handle the tab switching logic
-function openTab(evt, tabName) {
-    
-    // 1. Get all elements with the class 'tab-content'
-    var contents = document.getElementsByClassName("tab-content");
-    
-    // 2. Hide all content elements by removing 'active' class
-    for (var i = 0; i < contents.length; i++) {
-        contents[i].classList.remove("active");
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.getElementById('file-dropdown');
+    const contentDisplay = document.getElementById('file-content');
+
+    if (dropdown && contentDisplay) {
+        dropdown.addEventListener('change', function() {
+            const pathOrUrl = this.value;
+
+            if (!pathOrUrl) {
+                contentDisplay.innerHTML = '<p>Content will appear here when selected...</p>';
+                return;
+            }
+
+            // If it's a Google Slides link (or HTTP URL), render an iframe
+            if (pathOrUrl.startsWith('http://') || pathOrUrl.startsWith('https://')) {
+                contentDisplay.innerHTML = `
+                    <iframe 
+                        src="${pathOrUrl}" 
+                        frameborder="0" 
+                        width="100%" 
+                        height="500" 
+                        allowfullscreen="true">
+                    </iframe>`;
+            } 
+            // If it's a PDF or local file path, open or embed the PDF
+            else if (pathOrUrl.endsWith('.pdf')) {
+                contentDisplay.innerHTML = `
+                    <iframe 
+                        src="${pathOrUrl}" 
+                        width="100%" 
+                        height="600px">
+                    </iframe>`;
+            } 
+            // For HTML snippets or other local content
+            else {
+                fetch(pathOrUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error('File not found.');
+                        return response.text();
+                    })
+                    .then(text => {
+                        contentDisplay.innerHTML = text;
+                    })
+                    .catch(error => {
+                        contentDisplay.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+                    });
+            }
+        });
     }
-
-    // 3. Get all buttons with the class 'tab-button'
-    var buttons = document.getElementsByClassName("tab-button");
-    
-    // 4. Remove 'active' class from all buttons
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("active");
-    }
-
-    // 5. SHOW THE SELECTED CONTENT:
-    // Find the specific content element using its ID (e.g., 'news')
-    document.getElementById(tabName).classList.add("active");
-
-    // 6. MARK THE SELECTED BUTTON AS ACTIVE:
-    // Add 'active' class to the clicked button
-    evt.currentTarget.classList.add("active");
-}
-
-// OPTIONAL: Ensure that the correct tab is active on initial load (especially if the HTML structure changes)
-// The HTML structure already handles this by adding the 'active' class to the first button and content.
+});
